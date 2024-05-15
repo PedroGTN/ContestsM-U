@@ -11,7 +11,7 @@ void PinosPrime(){
     for(int i=3; i<1000000; i+=2){
         if(!notprime[i]) primes[i] = true;
 
-        for(int j=i+i; j<1000000; j+=i) notprime[j] = true;
+        for(int j=i*3; j<1000000; j+=i*2) notprime[j] = true;
     }
 }
 
@@ -21,31 +21,38 @@ void Solve(){
     vector<int> vec(n);
     for(int i=0; i<n; i++) cin>>vec[i];
 
-    uint64_t res=0, um;
-    vector<uint64_t> uns;
+    uint64_t res=0, qtt_uns;
+    vector<uint64_t> conjunto_uns;
     vector<bool> used(n, false);
     for(int i=0; i<n; i++){ 
-        uns.clear();
+
+        conjunto_uns.clear();
+
         if(!used[i]){
-            um = 0;
+            qtt_uns = 0;
             for(int j=i; j<n; j+=e){
-                if((!primes[vec[j]] && vec[j]!=1) || used[j]) break;
+
+                if((!primes[vec[j]] && vec[j]!=1) || used[j]) 
+                    break;
+
                 used[j] = true;
 
-                if(vec[j] == 1) um++;
-                else uns.push_back(um), um=0;
+                if(vec[j] == 1) 
+                    qtt_uns++;
+                else 
+                    conjunto_uns.push_back(qtt_uns), qtt_uns=0;
             }
         }
 
-        if(!uns.size()) continue;
-        uns.push_back(um);
+        if(conjunto_uns.size() == 0) continue;
+        conjunto_uns.push_back(qtt_uns);
 
-        for(int i=0; i< uns.size(); i++){
-            res += uns[i];
+        for(int i=0; i<conjunto_uns.size(); i++){
+            res += conjunto_uns[i];
 
-            if(i>0 && i<uns.size()-1) res += uns[i];
+            if(i>0 && i<conjunto_uns.size()-1) res += conjunto_uns[i];
             
-            if(i<uns.size()-1) res += uns[i] * uns[i+1]; 
+            if(i<conjunto_uns.size()-1) res += conjunto_uns[i] * conjunto_uns[i+1]; 
         }
     }
 
@@ -53,9 +60,9 @@ void Solve(){
 }
 
 int main(){
-    int t; cin>>t;
-
     PinosPrime();
+
+    int t; cin>>t;
 
     while(t--){
         Solve();

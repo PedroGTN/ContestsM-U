@@ -2,6 +2,7 @@
 
 using namespace std;
 
+
 int main(){
     string s, r;
 
@@ -14,5 +15,11 @@ int main(){
         if(*(r.end()-i) == *(s.end()-i)) ct++;
         else break;
     }
+
+    // for(int i=min(sizer, sizes)-1; i>=0; i--){
+    //     if(r[i] == s[i]) ct++;
+    //     else break;
+    // }
+    
     cout<<sizer+sizes-ct*2<<endl;
 }

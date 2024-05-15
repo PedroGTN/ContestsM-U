@@ -19,8 +19,6 @@ int main(){
         }
         map<int,int> mapa;
 
-
-
         for(int i=0; i<n; i++){
             if(vec[i] != vec[0])break;
             else mapa[vec.front()]++;
